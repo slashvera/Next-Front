@@ -1,7 +1,9 @@
+"use client";
 import React, { useState } from "react";
+import { FaRegUserCircle } from "react-icons/fa";
 
 export default function Header(){
-    const [dark, setDarkMode] = useState(false);
+    const [darkMode, setDarkMode] = useState(false);
     return( 
         <header className='bg-white flex justify-between items-center p-4 shadow-sm border-b border-gray-100 h-20'>
             <h1 className='text-2xl font-bold'>Dashboard</h1>
