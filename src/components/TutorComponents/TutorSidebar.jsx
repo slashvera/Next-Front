@@ -3,30 +3,29 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import logo from '@/assets/logo-side.svg'
+import logo from '@/assets/logo-side.svg';
 
 //============== Import Icons ==============//
-import { MdMenuOpen, MdOutlineLogout } from 'react-icons/md'
+import { MdMenuOpen, MdOutlineLogout } from 'react-icons/md';
 import { MdOutlineHome } from "react-icons/md";//Icono para Home/Inicio
-import { LuBookOpenCheck } from "react-icons/lu";// Icono para MisCursos
-import { RiCalendarScheduleLine } from "react-icons/ri";//Icono para mihorario
+import { RiStickyNoteAddLine } from "react-icons/ri";//Icono agregar nota
 import { FaRegUser } from "react-icons/fa";//Icono para Mis datos
 
-const menuItems =[
+
+const menuItems = [
     {icons: <MdOutlineHome size={22} />, label: "Inicio", path: "/dashboard"},
-    {icons: <LuBookOpenCheck size={22} />, label: "Mis Cursos", path:"/cursos"},
-    {icons: <RiCalendarScheduleLine size={22}/>, label:"Mi Horario", path:"/horarios"},
-    {icons: <FaRegUser size={22}/>, label:"Mis Datos", path:"/student"},
+    {icons: <RiStickyNoteAddLine size={22}/>, label: "Notas", path:"/Notas"},
+    {icons:<FaRegUser size={22}/>,label:"Mis Datos",path:"/tutor"},
+    {icons: <MdOutlineLogout size={22}/>, label:"Logout", path:"/auth"},
 ];
 
-export default function StudentSidebar(){
+export default function TutorSidebar(){
     const [open, setOpen] = useState(true);
     const pathname = usePathname();
 
     return(
-
         <nav
-            className={`shadow-md h-screen p-2 flex flex-col duration-500 bg-green-600 text-white ${
+            className={`shadow-md h-screen p-2 flex flex-col duration-500 bg-cyan-500 text-white ${
                 open ? "w-60" : "w-16"
             }`}
             >
@@ -59,8 +58,8 @@ export default function StudentSidebar(){
                         px-3 py-2 rounded-md duration-300 flex gap-2 items-center relative group
                         ${
                             isActive
-                            ? "bg-green-900 border-l-4 border-white shadow-lg"
-                            : "hover:bg-green-700"
+                            ? "bg-blue-800 border-l-4 border-white shadow-lg"
+                            : "hover:bg-blue-500"
                         }
                         `}
                     >
@@ -85,7 +84,7 @@ export default function StudentSidebar(){
             </ul>
 
             {/* Footer */}
-            <div className="border-t border-green-300 pt-4">
+            <div className="border-t border-blue-400 pt-4">
 
                 <div className="px-2 py-2 mb-4 hover:bg-red-500 rounded-md flex items-center gap-2 cursor-pointer duration-300">
                     <MdOutlineLogout size={22} />
