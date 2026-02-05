@@ -10,7 +10,7 @@ export default function Header(){
             <div className='flex items-center gap-4'>
                 <span className='text-sm text-gray-500'>Hey There!, Student</span>
                 
-                <div className='bg-blue-500 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold'>
+                <div className='bg-green-600 w-10 h-10 rounded-full flex items-center justify-center text-white font-bold'>
                     <FaRegUserCircle className='text-white text-xl' />
                 </div>
 
