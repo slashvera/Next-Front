@@ -13,10 +13,9 @@ import { FaRegUser } from "react-icons/fa";//Icono para Mis datos
 
 
 const menuItems = [
-    {icons: <MdOutlineHome size={22} />, label: "Inicio", path: "/dashboard"},
-    {icons: <RiStickyNoteAddLine size={22}/>, label: "Notas", path:"/Notas"},
-    {icons:<FaRegUser size={22}/>,label:"Mis Datos",path:"/tutor"},
-    {icons: <MdOutlineLogout size={22}/>, label:"Logout", path:"/auth"},
+    {icons: <MdOutlineHome size={22} />, label: "Inicio", path: "/tutor/dashboard"},
+    {icons: <RiStickyNoteAddLine size={22}/>, label: "Notas", path:"/tutor/notas"},
+    {icons:<FaRegUser size={22}/>,label:"Mis Datos",path:"/tutor/mis-datos"},
 ];
 
 export default function TutorSidebar(){
@@ -25,7 +24,7 @@ export default function TutorSidebar(){
 
     return(
         <nav
-            className={`shadow-md h-screen p-2 flex flex-col duration-500 bg-cyan-500 text-white ${
+            className={`shadow-md h-screen p-2 flex flex-col duration-500 bg-purple-600 text-white ${
                 open ? "w-60" : "w-16"
             }`}
             >

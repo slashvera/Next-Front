@@ -13,10 +13,10 @@ import { RiCalendarScheduleLine } from "react-icons/ri";//Icono para mihorario
 import { FaRegUser } from "react-icons/fa";//Icono para Mis datos
 
 const menuItems =[
-    {icons: <MdOutlineHome size={22} />, label: "Inicio", path: "/dashboard"},
-    {icons: <LuBookOpenCheck size={22} />, label: "Mis Cursos", path:"/cursos"},
-    {icons: <RiCalendarScheduleLine size={22}/>, label:"Mi Horario", path:"/horarios"},
-    {icons: <FaRegUser size={22}/>, label:"Mis Datos", path:"/student"},
+    {icons: <MdOutlineHome size={22} />, label: "Inicio", path: "/student/dashboard"},
+    {icons: <LuBookOpenCheck size={22} />, label: "Mis Cursos", path:"/student/cursos"},
+    {icons: <RiCalendarScheduleLine size={22}/>, label:"Mi Horario", path:"/student/horarios"},
+    {icons: <FaRegUser size={22}/>, label:"Mis Datos", path:"/student/mis-datos"},
 ];
 
 export default function StudentSidebar(){
