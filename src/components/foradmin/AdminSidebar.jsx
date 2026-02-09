@@ -13,12 +13,12 @@ import { TbReportSearch } from "react-icons/tb";
 
 const menuItems = [
   { icons: <IoHomeOutline size={22} />, label: "Home", path: "/administrador/dashboard" },
-  { icons: <PiUserBold size={22} />, label: "Users", path: "/users" },
-  { icons: <PiStudentBold size={22} />, label: "Students", path: "/students" },
-  { icons: <PiChalkboardTeacher size={22} />, label: "Teachers", path: "/teachers" },
-  { icons: <MdOutlineClass size={22} />, label: "Courses", path: "/courses" },
-  { icons: <MdOutlineAppRegistration size={22} />, label: "Enrollment", path: "/enrollment" },
-  { icons: <TbReportSearch size={22} />, label: "Reports", path: "/reports" },
+  { icons: <PiUserBold size={22} />, label: "Users", path: "/administrador/users" },
+  { icons: <PiStudentBold size={22} />, label: "Students", path: "/administrador/students" },
+  { icons: <PiChalkboardTeacher size={22} />, label: "Teachers", path: "/administrador/tutors" },
+  { icons: <MdOutlineClass size={22} />, label: "Courses", path: "/administrador/courses" },
+  { icons: <MdOutlineAppRegistration size={22} />, label: "Enrollment", path: "/administrador/enrollment" },
+  { icons: <TbReportSearch size={22} />, label: "Reports", path: "/administrador/reports" },
 ];
 
 export default function AdminSidebar() {
