@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const userApi = ({
+const userApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/register/",
     headers: {
         "Content-Type": "application/json",
