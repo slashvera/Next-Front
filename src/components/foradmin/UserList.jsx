@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 
-export default function UserList() {
+export default function UserList({ onAdd }) {
     const router = useRouter();
     const [users, setUsers] = useState([]);
 
@@ -31,12 +31,12 @@ export default function UserList() {
           Lista de Usuarios
         </h1>
 
-        <Link
-          href="/new-user"
-          className="bg-blue-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300"
-        >
-          New User +
-        </Link>
+        <button
+            onClick={onAdd}
+            className="bg-blue-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300"
+          >
+            New User +
+          </button>
       </div>
 
       {/* Tabla */}
