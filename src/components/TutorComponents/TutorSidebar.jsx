@@ -57,8 +57,8 @@ export default function TutorSidebar(){
                         px-3 py-2 rounded-md duration-300 flex gap-2 items-center relative group
                         ${
                             isActive
-                            ? "bg-blue-800 border-l-4 border-white shadow-lg"
-                            : "hover:bg-blue-500"
+                            ? "bg-purple-800 border-l-4 border-white shadow-lg"
+                            : "hover:bg-purple-500"
                         }
                         `}
                     >
@@ -83,7 +83,7 @@ export default function TutorSidebar(){
             </ul>
 
             {/* Footer */}
-            <div className="border-t border-blue-400 pt-4">
+            <div className="border-t border-purple-400 pt-4">
 
                 <div className="px-2 py-2 mb-4 hover:bg-red-500 rounded-md flex items-center gap-2 cursor-pointer duration-300">
                     <MdOutlineLogout size={22} />

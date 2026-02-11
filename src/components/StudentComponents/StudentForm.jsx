@@ -1,12 +1,12 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { createStudent, getStudent, updateStudent } from "@/api/students";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getUser } from "@/api/users";
+import { getUser, getUsers } from "@/api/users";
 import { useNotify } from "@/hooks/useNotify";
 
-export default function StudentForm({studentId}){
+export default function StudentForm({studentId, onClose, onSuccess}) {
     const router = useRouter();
     const [users, setUsers] = useState([]);
 
@@ -25,7 +25,7 @@ export default function StudentForm({studentId}){
     // ============ Cargar usuarios =========//
     useEffect(() => {
         const loadUsers = async () =>{
-            const res = await getUser();
+            const res = await getUsers();
             setUsers(res.data);
         };
         loadUsers();
@@ -51,108 +51,148 @@ export default function StudentForm({studentId}){
         }else{
             await createStudent(payload)
         }
-        router.push("/students")
+        onSuccess();
     };
 
     const isActive = watch("is_active");
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-base-200">
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className="w-full max-w-md bg-base-100 p-6 rounded-lg shadow-md"
-            >
-                <h1 className="text-2xl font-bold text-center mb-6">
-                    Formulario de Estudiante
-                </h1>
+    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+        <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="bg-white w-full max-w-md rounded-xl p-6 shadow-lg
+                    max-h-[90vh] overflow-y-auto space-y-4"
+        >
+         {/* Botton para Cerrar Modal */}
+         <button
+            type="button"
+            onClick={onClose}
+            className="absolute top-3 right-3 text-gray-400 hover:text-red-500"
+        >
+         ✕
+        </button>
 
-                {/* Nombre */}
-                <input
-                {...register("first_name", { required: "Nombre requerido" })}
-                placeholder="Nombre"
-                className="input input-bordered w-full mb-3"
-                />
-                {errors.first_name && (
-                <p className="text-error text-sm">{errors.first_name.message}</p>
-                )}
+        <h1 className="text-2xl font-bold text-center mb-4">
+            Formulario de Estudiante
+        </h1>
 
-                {/* Apellido */}
-                <input
-                {...register("last_name", { required: "Apellido requerido" })}
-                placeholder="Apellido"
-                className="input input-bordered w-full mb-3"
-                />
-
-                {/* Género */}
-                <select
-                {...register("gender", { required: true })}
-                className="select select-bordered w-full mb-3"
-                >
-                <option value="">Seleccione género</option>
-                <option value="M">Male</option>
-                <option value="F">Female</option>
-                <option value="O">Other</option>
-                </select>
-
-                {/* Email */}
-                <input
-                {...register("correo_std")}
-                type="email"
-                placeholder="Correo"
-                className="input input-bordered w-full mb-3"
-                />
-
-                {/* Fecha */}
-                <input
-                {...register("fecha_nac")}
-                type="date"
-                className="input input-bordered w-full mb-3"
-                />
-
-                {/* Ciudad */}
-                <select
-                {...register("city_std")}
-                className="select select-bordered w-full mb-3"
-                >
-                <option value="Managua">Managua</option>
-                <option value="Masaya">Masaya</option>
-                </select>
-
-                {/* Usuario */}
-                <select
-                {...register("user", { required: true })}
-                className="select select-bordered w-full mb-3"
-                >
-                <option value="">Seleccione un usuario</option>
-                {users.map((u) => (
-                    <option key={u.id} value={u.id}>
-                    {u.username}
-                    </option>
-                ))}
-                </select>
-
-                {/* Activo */}
-                <div className="flex items-center gap-3 mb-6">
-                <input
-                    type="checkbox"
-                    {...register("is_active")}
-                    className="checkbox checkbox-primary"
-                />
-                <span className={`text-xs font-bold px-2 py-1 rounded
-                    ${isActive ? "bg-success text-white" : "bg-error text-white"}`}>
-                    {isActive ? "ACTIVO" : "INACTIVO"}
-                </span>
-                </div>
-
-                {/* Botones */}
-                <button
-                type="submit"
-                disabled={isSubmitting}
-                className="btn btn-primary w-full"
-                >
-                {isSubmitting ? "Guardando..." : "Guardar"}
-                </button>
-            </form>
+        {/* Nombre */}
+        <div>
+            <input
+            {...register("first_name", { required: "Nombre requerido" })}
+            placeholder="Nombre"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+            {errors.first_name && (
+            <p className="text-red-500 text-sm mt-1">
+                {errors.first_name.message}
+            </p>
+            )}
         </div>
-    );
+
+        {/* Apellido */}
+        <div>
+            <input
+            {...register("last_name", { required: "Apellido requerido" })}
+            placeholder="Apellido"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+        </div>
+
+        {/* Género */}
+        <div>
+            <select
+            {...register("gender", { required: true })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+            <option value="">Seleccione género</option>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+            <option value="O">Other</option>
+            </select>
+        </div>
+
+        {/* Email */}
+        <div>
+            <input
+            {...register("correo_std")}
+            type="email"
+            placeholder="Correo"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+        </div>
+
+        {/* Fecha */}
+        <div>
+            <input
+            {...register("fecha_nac")}
+            type="date"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            />
+        </div>
+
+        {/* Ciudad */}
+        <div>
+            <select
+            {...register("city_std")}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+            <option value="Managua">Managua</option>
+            <option value="Masaya">Masaya</option>
+            </select>
+        </div>
+
+        {/* Usuario */}
+        <div>
+            <select
+            {...register("user", { required: true })}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white
+                        focus:ring-2 focus:ring-blue-500 focus:outline-none"
+            >
+            <option value="">Seleccione un usuario</option>
+            {users.map((u) => (
+                <option key={u.id} value={u.id}>
+                {u.username}
+                </option>
+            ))}
+            </select>
+        </div>
+
+        {/* Activo */}
+        <div className="flex items-center gap-3">
+            <input
+            type="checkbox"
+            {...register("is_active")}
+            className="w-5 h-5 accent-blue-600"
+            />
+            <span
+            className={`text-xs font-bold px-2 py-1 rounded ${
+                isActive
+                ? "bg-green-500 text-white"
+                : "bg-red-500 text-white"
+            }`}
+            >
+            {isActive ? "ACTIVO" : "INACTIVO"}
+            </span>
+        </div>
+
+        {/* Botón */}
+        <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-blue-600 hover:bg-blue-700 text-white
+                    font-semibold py-2 rounded-lg transition"
+        >
+            {isSubmitting ? "Guardando..." : "Guardar"}
+        </button>
+        </form>
+    </div>
+);
+
 }
