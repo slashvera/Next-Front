@@ -10,13 +10,13 @@ export default function StudentList({ onAdd }) {
   const [students, setStudents] = useState([]);
 
   const loadStudents = async () => {
-  try {
-    const response = await getStudents();
-    setStudents(response.data);
-  } catch (error) {
-    console.error("ERROR AXIOS:", error);
-  }
-};
+    try {
+      const response = await getStudents();
+      setStudents(response.data);
+    } catch (error) {
+      console.error("ERROR AXIOS:", error);
+    }
+  };
 
   useEffect(() => {
     loadStudents();

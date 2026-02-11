@@ -10,6 +10,6 @@ const cursoApi = axios.create({
 //======== CRUD =========//
 export const getCursos = () => cursoApi.get("/");
 export const getCurso = (id_curso) => cursoApi.get(`/${id_curso}/`);
-export const createTutor = (curso) => cursoApi.post("/",curso);
-export const updateTutor = (id_curso, curso) => cursoApi.put(`/${id_curso}/`, curso);
-export const deleteTutor  = (id_curso) =>cursoApi.delete(`/${id_curso}/`);
+export const createCurso = (curso) => cursoApi.post("/",curso);
+export const updateCurso = (id_curso, curso) => cursoApi.put(`/${id_curso}/`, curso);
+export const deleteCurso  = (id_curso) =>cursoApi.delete(`/${id_curso}/`);
