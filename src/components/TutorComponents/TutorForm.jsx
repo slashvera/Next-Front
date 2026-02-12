@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { getTutor, updateTutor, createTutor } from "@/api/tutors";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getUsers } from "@/api/users";
+import { getUsers, getUser } from "@/api/users";
 import { useNotify } from "@/hooks/useNotify";
 
 export default function TutorForm({ tutorId, onClose, onSuccess }) {
@@ -78,21 +78,10 @@ export default function TutorForm({ tutorId, onClose, onSuccess }) {
   const isActive = watch("is_active");
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white w-full max-w-md rounded-xl p-6 shadow-lg
-                   max-h-[90vh] overflow-y-auto space-y-4"
+        className="w-full space-y-4 shadow-lg rounded-lg p-6 bg-white"
       >
-        {/* Botón cerrar */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-3 right-3 text-gray-400 hover:text-red-500"
-        >
-          ✕
-        </button>
-
         <h1 className="text-2xl font-bold text-center mb-4">
           Formulario de Tutor
         </h1>
@@ -189,6 +178,5 @@ export default function TutorForm({ tutorId, onClose, onSuccess }) {
           {isSubmitting ? "Guardando..." : "Guardar"}
         </button>
       </form>
-    </div>
   );
 }

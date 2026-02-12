@@ -82,15 +82,6 @@ export default function UserForm({ userId, onClose, onSuccess }) {
                 className="bg-white w-full max-w-md rounded-xl p-6 shadow-lg
                     max-h-[90vh] overflow-y-auto space-y-4"
             >
-
-                {/* Botton para Cerrar Modal */}
-                <button
-                    type="button"
-                    onClick={onClose}
-                    className="absolute top-3 right-3 text-gray-400 hover:text-red-500"
-                >
-                ✕
-                </button>
                 <h1 className="text-2xl font-bold text-center mb-4">
                 Formulario de Usuario
                 </h1>

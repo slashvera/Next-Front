@@ -91,11 +91,9 @@ export default function CursoForm({ cursoId, onClose, onSuccess }) {
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="bg-white w-full max-w-md rounded-xl p-6 shadow-lg
-                   max-h-[90vh] overflow-y-auto space-y-4"
+        className="w-full space-y-4 shadow-lg rounded-lg p-6 bg-white"
       >
         {/* Botón para cerrar modal */}
         <button
@@ -194,6 +192,5 @@ export default function CursoForm({ cursoId, onClose, onSuccess }) {
           {isSubmitting ? "Guardando..." : "Guardar"}
         </button>
       </form>
-    </div>
   );
 }

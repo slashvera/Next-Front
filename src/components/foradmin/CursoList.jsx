@@ -42,7 +42,7 @@ export default function CursoList({ onAdd, onEdit }) {
         {cursos.map((curso) => (
           <div
             key={curso.id_curso}
-            className="bg-white shadow-md rounded-lg p-6 border border-gray-200 hover:shadow-lg transition"
+            className="bg-white rounded-lg shadow p-4 hover:scale-105 transition-transform duration-300 ease-in-out hover:shadow-lg"
           >
             <p className="text-sm text-gray-700 mb-1">
               <span className="font-bold">ID:</span> {curso.id_curso}
