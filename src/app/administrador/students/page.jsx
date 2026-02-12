@@ -17,10 +17,7 @@ export default function StudentsPage() {
         onClose={() => setOpen(false)}
         title="Agregar estudiante"
       >
-        <StudentForm
-          onClose={() => setOpen(false)}
-          onSuccess={() => setOpen(false)}
-        />
+        <StudentForm onSuccess={() => setOpen(false)} />
       </Modal>
     </>
   );
