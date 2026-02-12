@@ -2,11 +2,10 @@
 import React, { useState } from "react";
 import { getUsers } from "@/api/users";
 import { useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 
-export default function UserList() {
+export default function UserList({ onAdd, onEdit }) {
     const router = useRouter();
     const [users, setUsers] = useState([]);
 
@@ -31,12 +30,12 @@ export default function UserList() {
           Lista de Usuarios
         </h1>
 
-        <Link
-          href="/new-user"
-          className="bg-blue-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300"
-        >
-          New User +
-        </Link>
+        <button
+            onClick={onAdd}
+            className="bg-blue-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300"
+          >
+            New User +
+          </button>
       </div>
 
       {/* Tabla */}
@@ -86,7 +85,7 @@ export default function UserList() {
                   <div className="flex justify-center gap-2">
                     {/* Editar */}
                     <button
-                      onClick={() => router.push(`/students/edit/${student.id_std}`)}
+                      onClick={() => onEdit(user.id)}
                       className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg shadow-sm transition"
                       title="Editar estudiante"
                     >

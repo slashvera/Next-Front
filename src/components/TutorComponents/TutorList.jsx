@@ -3,10 +3,9 @@
 import React, { useState } from "react";
 import { getTutors } from "@/api/tutors"; 
 import { useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function TutorList(){
+export default function TutorList( {onAdd, onEdit}) {
 
     const router = useRouter();
     const [tutors, setTutors] = useState([]);
@@ -28,12 +27,12 @@ export default function TutorList(){
                     Lista de Tutores
                 </h1>
 
-                <Link
-                    href="/new-tutor"
+                <button
+                    onClick={onAdd}
                     className="bg-blue-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300"
                 >
                     New Tutor +
-                </Link>
+                </button>
             </div>
 
             <div className="overflow-x-auto bg-white shadow-md rounded-lg">
@@ -89,7 +88,7 @@ export default function TutorList(){
                                     <div className="flex  gap-2">
                                         {/* Editar */}
                                         <button
-                                            onClick={() => router.push(`/tutors/edit/${tutor.id_tutor}`)}
+                                            onClick={() => onEdit(tutor.id_tutor)}
                                             className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg shadow-sm transition"
                                             title="Editar tutor"
                                         >
