@@ -2,11 +2,11 @@
 import { useForm } from "react-hook-form";
 import { createUser, updateUser, getUser } from "@/api/users";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useNotify } from "@/hooks/useNotify";
 import { useParams } from "next/navigation";
 
-export default function UserForm({ userId, onClose, onSuccess }) {
+export default function UserForm({ userId, onSuccess }) {
 
     const router = useRouter();
     const notify = useNotify();
@@ -23,6 +23,9 @@ export default function UserForm({ userId, onClose, onSuccess }) {
         formState: { errors, isSubmitting }
     } = useForm({
         defaultValues:{
+            id: "",
+            username: "",
+            email: "",
             is_active: true,
         }
     });
@@ -31,24 +34,25 @@ export default function UserForm({ userId, onClose, onSuccess }) {
     const isActive = watch("is_active");
     
     // ============ Cargar Usuario (Editar) ============//
-     useEffect(() => {
-    if (!params?.id) return;
+    useEffect(() => {
+        if (!userId) return;
 
-    const loadUser = async () => {
+        const loadUser = async () => {
+            try {
+            const res = await getUser(userId);
 
-        try {
-            const res = await getUser(params.id);
-            const user = res.data;
-
-            setValue("username", user.username);
-            setValue("email", user.email);
-            setValue("is_active", user.is_active);
-        } catch (error) {
-            notify.error("Error cargando usuario");
-        }
+            reset({
+                id: res.data.id ?? "",
+                username: res.data.username ?? "",
+                email: res.data.email ?? "",
+                is_active: res.data.is_active ?? true,
+            });
+            } catch (error) {
+            notify.error("Error cargando el usuario");
+            }
         };
         loadUser();
-    }, [params?.id, setValue, notify]);
+    }, [userId, reset]);
 
 
     {/* Enviar el Formulario */}
@@ -60,22 +64,22 @@ export default function UserForm({ userId, onClose, onSuccess }) {
                 delete data.confirm_password;
             }
 
-            if(params?.id){
-                await updateUser(params.id, data);
+            if(userId){
+                await updateUser(userId, data);
                 notify.success("Usuario actualizado correctamente");
             } else {
                 await createUser(data);
                 notify.success("Usuario creado correctamente");
             }
 
-            router.push("/administrador/usuarios");
+            router.refresh();
+            onSuccess();
         }catch(error){
             notify.error("Error al guardar el usuario");
         }
     };  
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
 
             <form
                 onSubmit={handleSubmit(onSubmit)}
@@ -201,19 +205,18 @@ export default function UserForm({ userId, onClose, onSuccess }) {
                 <div className="mt-4 flex gap-2">
                 <button
                     type="submit"
-                    className="bg-primary text-primary-content px-4 py-2 rounded"
+                    className="bg-blue-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300"
                 >
                     Submit
                 </button>
                 <button
                     type="button"
-                    onClick={() => router.push("/users")}
-                    className="bg-error text-error-content px-4 py-2 rounded"
+                    onClick={() => router.refresh()}
+                    className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg shadow transition duration-300"
                 >
                     Cancel
                 </button>
                 </div>
             </form>
-        </div>
   );
 }

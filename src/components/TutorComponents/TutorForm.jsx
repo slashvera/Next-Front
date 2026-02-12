@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { getUsers, getUser } from "@/api/users";
 import { useNotify } from "@/hooks/useNotify";
 
-export default function TutorForm({ tutorId, onClose, onSuccess }) {
+export default function TutorForm({ tutorId, onSuccess }) {
   const router = useRouter();
   const [users, setUsers] = useState([]);
   const { success, error } = useNotify();
@@ -109,6 +109,11 @@ export default function TutorForm({ tutorId, onClose, onSuccess }) {
             className="w-full px-4 py-2 border border-gray-300 rounded-lg
                        focus:ring-2 focus:ring-blue-500 focus:outline-none"
           />
+          {errors.last_name && (
+            <p className=" text-red-500 text-sm mt-1">
+              {errors.last_name.message}
+            </p>
+          )}
         </div>
 
         {/* Género */}

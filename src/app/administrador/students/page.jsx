@@ -7,17 +7,34 @@ import Modal from "@/components/Modal";
 
 export default function StudentsPage() {
   const [open, setOpen] = useState(false);
+  const [studentId, setstudentId] = useState(null);
+
+  //============ Manejadores =========/
+  const handleAdd = () => {
+    setstudentId(null); // modo creación
+    setOpen(true);
+  };
+
+  const handleEdit = (id) => {
+    setstudentId(id); // modo edición
+    setOpen(true);
+  };
 
   return (
     <>
-      <StudentList onAdd={() => setOpen(true)} />
+     {/* Lista de cursos, con callback para crear o editar */}
+      <StudentList onAdd={handleAdd} onEdit={handleEdit} />
 
       <Modal
         open={open}
         onClose={() => setOpen(false)}
-        title="Agregar estudiante"
+        title={studentId ? "Editar Estudiante" : "Agregar Estudiante"}
       >
-        <StudentForm onSuccess={() => setOpen(false)} />
+      <StudentForm
+        studentId={studentId} // aquí pasamos el id del curso
+        onClose={() => setOpen(false)}
+        onSuccess={() => setOpen(false)}
+      />
       </Modal>
     </>
   );

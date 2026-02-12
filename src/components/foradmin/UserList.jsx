@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 
-export default function UserList({ onAdd }) {
+export default function UserList({ onAdd, onEdit }) {
     const router = useRouter();
     const [users, setUsers] = useState([]);
 
@@ -86,7 +86,7 @@ export default function UserList({ onAdd }) {
                   <div className="flex justify-center gap-2">
                     {/* Editar */}
                     <button
-                      onClick={() => router.push(`/students/edit/${student.id_std}`)}
+                      onClick={() => onEdit(user.id)}
                       className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg shadow-sm transition"
                       title="Editar estudiante"
                     >

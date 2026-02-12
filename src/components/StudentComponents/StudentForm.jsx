@@ -18,6 +18,13 @@ export default function StudentForm({studentId, onSuccess}) {
         formState: { errors, isSubmitting}
     } = useForm({
         defaultValues: {
+            id_std:"",
+            first_name:"",
+            last_name:"",
+            correo_std:"",
+            fecha_nac:"",
+            city_std:"",
+            gender:"",
             is_active: true,
         }
     });
@@ -25,9 +32,14 @@ export default function StudentForm({studentId, onSuccess}) {
     // ============ Cargar usuarios =========//
     useEffect(() => {
         const loadUsers = async () =>{
-            const res = await getUsers();
-            setUsers(res.data);
-        };
+            try{
+                const res = await getUsers();
+                setUsers(res.data);
+            } catch(error){
+                console.error("Error cargando tutores", error);
+            }
+        }
+
         loadUsers();
     }, []);
 
@@ -36,22 +48,50 @@ export default function StudentForm({studentId, onSuccess}) {
         if(!studentId)  return;
 
         const loadStudents = async () =>{
-            const res = await getStudent(studentId);
-            reset(res.data);
+            try{
+                const res = await getStudent(studentId);
+
+                const studentdata = {
+                id_std: res.data.id_std || "",
+                first_name: res.data.first_name || "",
+                last_name: res.data.last_name || "",
+                correo_std: res.data.correo_std || "",
+                fecha_nac: res.data.fecha_nac || "",
+                city_std: res.data.city_std || "",
+                gender: res.data.gender || "",
+                user: res.data.user || "",
+                is_active: res.data.is_active || "",
+            }
+
+            reset(studentdata);
+            }catch (error){
+                console.error("Error cargando Estudiante", error);
+            }
         };
         loadStudents(); 
     }, [studentId, reset]);
 
     //=========== Submit(Form) ============//
     const onSubmit = async (data) =>{
-        const {gender_display, id_std, ...payload} = data;
-
-        if(studentId){
-            await updateStudent(studentId, payload);
-        }else{
-            await createStudent(payload)
+        try{
+            if (studentId) {
+                    await updateStudent(studentId, data);
+                    notify.success("¡Estudiante  Actualizado con éxito!");
+                } else {
+                    await createStudent(data);
+                    notify.success("¡Estudiante Agregado correctamente!");
+                }
+            onSuccess();
+        }catch (error){
+            const serverErrors = error.response?.data;
+            if (serverErrors?.id_std) {
+                notify.error("El ID del Estudiante ya existe o no es válido.");
+            } else if (serverErrors?.first_name) {
+                notify.warning("El nombre es un Campo obligatorio.");
+            } else {
+                notify.error("No se pudo guardar el curso. Revisa los datos.");
+            }
         }
-        onSuccess();
     };
 
     const isActive = watch("is_active");
@@ -92,7 +132,7 @@ export default function StudentForm({studentId, onSuccess}) {
             {...register("gender", { required: true })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white"
             >
-            <option value="">Seleccione género</option>
+            <option value="">Seleccione Ciudad </option>
             <option value="M">Male</option>
             <option value="F">Female</option>
             <option value="O">Other</option>
@@ -118,6 +158,7 @@ export default function StudentForm({studentId, onSuccess}) {
             {...register("city_std")}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-white"
             >
+            <option value="">Seleccione género</option>
             <option value="Managua">Managua</option>
             <option value="Masaya">Masaya</option>
             </select>
@@ -147,6 +188,7 @@ export default function StudentForm({studentId, onSuccess}) {
             <button
             type="submit"
             disabled={isSubmitting}
+            onClick={onSuccess}
             className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg"
             >
             {isSubmitting ? "Guardando..." : "Guardar"}

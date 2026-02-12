@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useNotify } from "@/hooks/useNotify";
 
-export default function CursoForm({ cursoId, onClose, onSuccess }) {
+export default function CursoForm({ cursoId, onSuccess }) {
   const router = useRouter();
   const notify = useNotify();
   const [tutors, setTutors] = useState([]);
@@ -95,15 +95,6 @@ export default function CursoForm({ cursoId, onClose, onSuccess }) {
         onSubmit={handleSubmit(onSubmit)}
         className="w-full space-y-4 shadow-lg rounded-lg p-6 bg-white"
       >
-        {/* Botón para cerrar modal */}
-        <button
-          type="button"
-          onClick={onClose}
-          className="absolute top-3 right-3 text-gray-400 hover:text-red-500"
-          
-        >
-          ✕
-        </button>
 
         <h1 className="text-2xl font-bold text-center mb-4">
           Formulario de Cursos

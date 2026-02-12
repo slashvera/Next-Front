@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-export default function StudentList({ onAdd }) {
+export default function StudentList({ onAdd , onEdit }) {
   const router = useRouter();
   const [students, setStudents] = useState([]);
 
@@ -27,7 +27,7 @@ export default function StudentList({ onAdd }) {
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-3xl font-semibold text-gray-800">
-            Lista de Usuarios
+            Lista de Estudiantes
           </h1>
 
           <button
@@ -114,7 +114,7 @@ export default function StudentList({ onAdd }) {
                     <div className="flex justify-center gap-2">
                       {/* Editar */}
                       <button
-                        onClick={() => router.push(`/students/edit/${student.id_std}`)}
+                        onClick={() => onEdit(student.id_std)}
                         className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-lg shadow-sm transition"
                         title="Editar estudiante"
                       >
