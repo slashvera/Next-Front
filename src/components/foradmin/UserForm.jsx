@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { createUser, updateUser, getUser } from "@/api/users";
 import { useRouter } from "next/navigation";
-import { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useNotify } from "@/hooks/useNotify";
 import { useParams } from "next/navigation";
 
@@ -111,7 +111,6 @@ export default function UserForm({ userId, onSuccess }) {
                     placeholder="Email"
                     type="email"
                     {...register("email", {
-                    required: "Email requerido",
                     pattern: {
                         value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
                         message: "Email inválido",
