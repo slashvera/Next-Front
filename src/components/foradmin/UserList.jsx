@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { getUsers } from "@/api/users";
 import { useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 
@@ -10,20 +9,20 @@ export default function UserList({ onAdd }) {
     const router = useRouter();
     const [users, setUsers] = useState([]);
 
-    const loadUsers = async () => {
-        try {
-            const response = await getUsers();
-            setUsers(response.data);
-        } catch (error) {
-            console.error("ERROR AXIOS:", error);
-        }
+    const loadUsers = async () =>{
+      try{
+        const response = await getUsers();
+        setUsers(response.data);
+      }catch (error){
+        console.error("Error Axios:", error);
+      }
     };
 
-    useEffect(() =>{
-        loadUsers();
+    useEffect(() => {
+      loadUsers();
     }, []);
 
-     return (
+    return (
     <div className="mt-8 container mx-auto px-4">
       {/* Header */}
       <div className="flex justify-between items-center mb-6">
