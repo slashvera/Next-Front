@@ -13,7 +13,7 @@ export default function AuthLayout({ children }) {
         </div>
 
         {/* Panel derecho (descripción clara) */}
-        <div className="hidden md:flex flex-col justify-center p-12 relative bg-gradient-to-br from-blue-50 to-blue-200">
+        <div className="hidden md:flex flex-col justify-center p-12 relative bg-linear-to-br from-blue-50 to-blue-200">
           
           {/* Fondo decorativo */}
           <div className="absolute inset-0 opacity-100 bg-[url('@/assets/fondoLogin.jpg')] bg-cover bg-center mix-blend-overlay"></div>

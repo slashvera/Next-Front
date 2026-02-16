@@ -3,58 +3,7 @@ import { useState } from "react";
 import { User, Lock, Loader2, ShieldUser} from "lucide-react";
 
 export default function LoginPage() {
-  const [formData, setFormData] = useState({
-    username: "",
-    password: "",
-    role: "student",
-  });
 
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-  const handleInput = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const redirectByRole = (role) => {
-    const routes = {
-      admin: "/administrador/dashboard",
-      tutor: "/tutor/dashboard",
-      student: "/student/dashboard",
-    };
-    window.location.href = routes[role] || "/";
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-
-    if (!formData.username || !formData.password) {
-      return setError("Completa todos los campos");
-    }
-
-    setLoading(true);
-
-    try {
-      const res = await fetch("http://localhost:8000/api/login/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        setLoading(false);
-        return setError(data.error || "Credenciales incorrectas");
-      }
-
-      document.cookie = `token=${data.access}; path=/;`;
-      redirectByRole(data.role);
-    } catch {
-      setError("Error de conexión con el servidor");
-      setLoading(false);
-    }
-  };
 
   return (
     <form
