@@ -9,6 +9,7 @@ import { useNotify } from "@/hooks/useNotify";
 export default function StudentForm({studentId, onSuccess}) {
     const router = useRouter();
     const [users, setUsers] = useState([]);
+    const notify = useNotify();
 
     const {
         register,

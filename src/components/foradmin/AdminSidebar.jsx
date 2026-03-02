@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import logo from "@/assets/logo-side.svg";
+import { signOut } from "next-auth/react";
+
 
 // Icons
 import { MdMenuOpen, MdOutlineSettings, MdOutlineLogout, MdOutlineClass, MdOutlineAppRegistration } from "react-icons/md";
@@ -24,6 +26,13 @@ const menuItems = [
 export default function AdminSidebar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  const handleLogout = async () =>{
+    // signOut limpia la sesión y por defecto redirige a la página de inicio
+    await signOut({
+      callbackUrl: "/authentication/login" // Redirige al login después de cerrar sesión
+    })
+  }
 
   return (
     <nav className={`shadow-md h-screen p-2 flex flex-col duration-500 bg-blue-600 text-white ${open ? "w-60" : "w-16"}`}>
@@ -83,7 +92,9 @@ export default function AdminSidebar() {
           </p>
         </div>
 
-        <div className="px-2 py-2 mb-4 hover:bg-red-500 rounded-md flex items-center gap-2 cursor-pointer">
+        <div
+          onClick={handleLogout}
+          className="px-2 py-2 mb-4 hover:bg-red-500 rounded-md flex items-center gap-2 cursor-pointer">
           <MdOutlineLogout size={22} />
           <p className={`${!open && "w-0 opacity-0"} duration-500 overflow-hidden font-bold text-xs`}>
             Logout

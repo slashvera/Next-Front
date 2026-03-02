@@ -1,10 +1,27 @@
 import axios from "axios"
+import { getSession } from "next-auth/react";
 
 const cursoApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_API_URL + "/cursos/",
     headers: {
         "Content-Type": "application/json",
     },
+});
+
+
+// ============= INTERCEPTOR DE SEGURIDAD =============
+cursoApi.interceptors.request.use(async (config) => {
+    // Obtenemos la sesión de NextAuth
+    const session = await getSession();
+    
+    // Si hay un token en la sesión, lo agregamos al header Authorization
+    if (session?.user?.accessToken) {
+        config.headers.Authorization = `Bearer ${session.user.accessToken}`;
+    }
+    
+    return config;
+}, (error) => {
+    return Promise.reject(error);
 });
 
 //======== CRUD =========//
