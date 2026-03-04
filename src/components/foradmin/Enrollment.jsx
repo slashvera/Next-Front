@@ -16,9 +16,10 @@ export default function EnrollmentPage() {
   const loadMatriculas = async () => {
     try {
       const response = await getMatriculas();
+      console.log("Matriculas:", response.data); // 👈 imprime el JSON recibido
       setMatriculas(response.data);
     } catch (error) {
-      console.error("Error cargando matriculas:", error);
+      console.error("Error cargando matriculas:", error.response?.data || error);
     }
   };
 
@@ -30,11 +31,18 @@ export default function EnrollmentPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createMatricula(formData);
+      const payload = {
+        id_std: Number(formData.id_std),
+        id_curso: Number(formData.id_curso),
+        semestre: Number(formData.semestre),
+        estado: formData.estado,
+      };
+
+      await createMatricula(payload);
       setFormData({ id_std: "", id_curso: "", semestre: "", estado: "ACTIVA" });
       loadMatriculas();
     } catch (error) {
-      console.error("Error creando matrícula:", error);
+      console.error("Error creando matrícula:", error.response?.data || error);
     }
   };
 
@@ -101,27 +109,35 @@ export default function EnrollmentPage() {
             </tr>
           </thead>
           <tbody>
-            {matriculas.map((m) => (
-              <tr key={m.id_matricula} className="hover:bg-gray-50 transition-colors">
-                <td className="px-4 py-2 text-gray-700">{m.id_matricula}</td>
-                <td className="px-4 py-2 text-gray-700">
-                  {m.estudiante_nombre} {m.estudiante_apellido}
-                </td>
-                <td className="px-4 py-2 text-gray-700">{m.nombre_curso}</td>
-                <td className="px-4 py-2 text-gray-700">{m.semestre}</td>
-                <td className="px-4 py-2">
-                  {m.estado === "ACTIVA" ? (
-                    <span className="px-3 py-1 inline-flex text-xs font-semibold rounded-full bg-green-100 text-green-700 border">
-                      Activa
-                    </span>
-                  ) : (
-                    <span className="px-3 py-1 inline-flex text-xs font-semibold rounded-full bg-red-100 text-red-700 border">
-                      Inactiva
-                    </span>
-                  )}
+            {matriculas.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="text-center text-gray-500 py-4">
+                  No hay matrículas registradas
                 </td>
               </tr>
-            ))}
+            ) : (
+              matriculas.map((m) => (
+                <tr key={m.id_matricula} className="hover:bg-gray-50 transition-colors">
+                  <td className="px-4 py-2 text-gray-700">{m.id_matricula}</td>
+                  <td className="px-4 py-2 text-gray-700">
+                    {m.estudiante_nombre} {m.estudiante_apellido}
+                  </td>
+                  <td className="px-4 py-2 text-gray-700">{m.nombre_curso}</td>
+                  <td className="px-4 py-2 text-gray-700">{m.semestre}</td>
+                  <td className="px-4 py-2">
+                    {m.estado === "ACTIVA" ? (
+                      <span className="px-3 py-1 inline-flex text-xs font-semibold rounded-full bg-green-100 text-green-700 border">
+                        Activa
+                      </span>
+                    ) : (
+                      <span className="px-3 py-1 inline-flex text-xs font-semibold rounded-full bg-red-100 text-red-700 border">
+                        Inactiva
+                      </span>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
           </tbody>
         </table>
       </div>
