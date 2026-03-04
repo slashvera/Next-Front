@@ -28,6 +28,6 @@ userApi.interceptors.request.use(async (config) => {
 //=========== CRUD ==========//
 export const getUsers = () => userApi.get("/");
 export const getUser = (id) => userApi.get(`/${id}/`);
-export const createUser = (user) => userApi.post("/",user);
+export const createUser = (user) => userApi.post("",user);
 export const updateUser = (id, user ) => userApi.put(`/${id}/`, user);
 export const deleteUser  = (id) => userApi.delete(`/${id}/`);
