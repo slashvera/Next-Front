@@ -2,24 +2,31 @@
 import React, { useState } from "react";
 import { getStudents } from "@/api/students";
 import { useEffect } from "react";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function StudentList({ onAdd , onEdit }) {
   const router = useRouter();
   const [students, setStudents] = useState([]);
 
-  const loadStudents = async () => {
-    try {
-      const response = await getStudents();
-      setStudents(response.data);
-    } catch (error) {
-      console.error("ERROR AXIOS:", error);
-    }
-  };
-
   useEffect(() => {
+    let isMounted = true;
+
+    const loadStudents = async () => {
+      try {
+        const response = await getStudents();
+        if (isMounted) {
+          setStudents(response.data);
+        }
+      } catch (error) {
+        console.error("ERROR AXIOS:", error);
+      }
+    };
+
     loadStudents();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
     return (

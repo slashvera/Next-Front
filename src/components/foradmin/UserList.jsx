@@ -18,8 +18,25 @@ export default function UserList({ onAdd, onEdit }) {
         }
     };
 
-    useEffect(() =>{
-        loadUsers();
+    useEffect(() => {
+        let isMounted = true;
+
+        const loadUsersSafe = async () => {
+            try {
+                const response = await getUsers();
+                if (isMounted) {
+                    setUsers(response.data);
+                }
+            } catch (error) {
+                console.error("ERROR AXIOS:", error);
+            }
+        };
+
+        loadUsersSafe();
+
+        return () => {
+            isMounted = false;
+        };
     }, []);
 
      return (
@@ -107,9 +124,9 @@ export default function UserList({ onAdd, onEdit }) {
 
                     {/* Eliminar */}
                     <button
-                      onClick={() => router.push(`/students/delete/${student.id_std}`)}
+                      onClick={() => router.push(`/users/delete/${user.id}`)}
                       className="bg-red-600 hover:bg-red-700 text-white p-2 rounded-lg shadow-sm transition"
-                      title="Eliminar estudiante"
+                      title="Eliminar usuario"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"

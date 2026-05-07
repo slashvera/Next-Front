@@ -2,23 +2,30 @@
 import { useState, useEffect } from "react";
 import { getCursos } from "@/api/cursos";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 export default function CursoList({ onAdd, onEdit }) {
   const router = useRouter();
   const [cursos, setCursos] = useState([]);
 
-  const loadCursos = async () => {
-    try {
-      const response = await getCursos();
-      setCursos(response.data);
-    } catch (error) {
-      console.error("ERROR AXIOS:", error);
-    }
-  };
-
   useEffect(() => {
+    let isMounted = true;
+
+    const loadCursos = async () => {
+      try {
+        const response = await getCursos();
+        if (isMounted) {
+          setCursos(response.data);
+        }
+      } catch (error) {
+        console.error("ERROR AXIOS:", error);
+      }
+    };
+
     loadCursos();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   return (

@@ -10,14 +10,22 @@ export default function TutorList( {onAdd, onEdit}) {
     const router = useRouter();
     const [tutors, setTutors] = useState([]);
 
-    const loadTutors = async () => {
-        const res = await getTutors();
-        setTutors(res.data)
-    };
-
     useEffect(() => {
+        let isMounted = true;
+
+        const loadTutors = async () => {
+            const res = await getTutors();
+            if (isMounted) {
+                setTutors(res.data);
+            }
+        };
+
         loadTutors();
-    },[]);
+
+        return () => {
+            isMounted = false;
+        };
+    }, []);
 
     return(
 

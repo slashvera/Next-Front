@@ -12,19 +12,25 @@ export default function EnrollmentPage() {
     estado: "ACTIVA",
   });
 
-  // Cargar matriculas
-  const loadMatriculas = async () => {
-    try {
-      const response = await getMatriculas();
-      console.log("Matriculas:", response.data); // 👈 imprime el JSON recibido
-      setMatriculas(response.data);
-    } catch (error) {
-      console.error("Error cargando matriculas:", error.response?.data || error);
-    }
-  };
-
   useEffect(() => {
+    let isMounted = true;
+
+    const loadMatriculas = async () => {
+      try {
+        const response = await getMatriculas();
+        if (isMounted) {
+          setMatriculas(response.data);
+        }
+      } catch (error) {
+        console.error("Error cargando matriculas:", error.response?.data || error);
+      }
+    };
+
     loadMatriculas();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   // Submit del formulario
@@ -40,7 +46,8 @@ export default function EnrollmentPage() {
 
       await createMatricula(payload);
       setFormData({ id_std: "", id_curso: "", semestre: "", estado: "ACTIVA" });
-      loadMatriculas();
+      const response = await getMatriculas();
+      setMatriculas(response.data);
     } catch (error) {
       console.error("Error creando matrícula:", error.response?.data || error);
     }
